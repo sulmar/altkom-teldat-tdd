@@ -22,7 +22,7 @@ namespace TestApp.Fundamentals
     }
 
 
-    public static class IIFFactory
+    public static class VehicleFactory
     {
         // https://pl.wikipedia.org/wiki/Oznakowania_statk%C3%B3w_powietrznych
         public static Vehicle Create(string symbolIdentifier)
