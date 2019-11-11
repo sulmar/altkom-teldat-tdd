@@ -10,30 +10,28 @@ namespace TestApp.Fundamentals
         public string Code { get; set; }
     }
 
-    public class Mine : Vehicle
+    public class Friend : Vehicle
     {
         public string Unit { get; set; }
     }
 
 
-    public class Alien : Vehicle
+    public class Foe : Vehicle
     {
         public string Country { get; set; }
     }
 
 
-    public static class VehicleFactory
+    public static class IIFFactory
     {
         // https://pl.wikipedia.org/wiki/Oznakowania_statk%C3%B3w_powietrznych
-        public static Vehicle Create(string code)
+        public static Vehicle Create(string symbolIdentifier)
         {
             // ICAO Code = SP   -> Mine
 
             // ICAO Code <> SP  -> Alien
 
-
-
-            return new Mine();
+            return new Friend();
         }
     }
 }
