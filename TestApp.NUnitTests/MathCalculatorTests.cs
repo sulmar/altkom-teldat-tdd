@@ -1,3 +1,4 @@
+using FluentAssertions;
 using NUnit.Framework;
 using System.Linq;
 using TestApp;
@@ -28,16 +29,25 @@ namespace Tests
             Assert.That(result, Does.Contain(3));
             Assert.That(result, Does.Contain(5));
 
-            Assert.That(result, Is.EquivalentTo(new[] { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97 }));
+            Assert.That(result, Is.EquivalentTo(GetExpectedNumbers()));
 
             Assert.That(result, Is.Ordered);
             Assert.That(result, Is.Unique);
 
+            // Fluent
+            result.Should().NotBeEmpty()
+                .And.HaveCount(25)
+                .And.ContainInOrder(GetExpectedNumbers());
 
 
 
 
 
+        }
+
+        private static int[] GetExpectedNumbers()
+        {
+            return new[] { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97 };
         }
 
         [Test]

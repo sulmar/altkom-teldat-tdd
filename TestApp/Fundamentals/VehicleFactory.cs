@@ -22,16 +22,52 @@ namespace TestApp.Fundamentals
     }
 
 
+    public static class CountryFactory
+    {
+        private static IDictionary<string, string> codes = new Dictionary<string, string>
+        {
+
+        };
+
+        public static string Create(string code)
+        {
+            return codes[code];
+        }
+    }
+
     public static class VehicleFactory
     {
         // https://pl.wikipedia.org/wiki/Oznakowania_statk%C3%B3w_powietrznych
         public static Vehicle Create(string symbolIdentifier)
         {
-            // ICAO Code = SP   -> Mine
+            // ICAO Code = SP   -> Friend
 
-            // ICAO Code <> SP  -> Alien
+            // ICAO Code in ( ...  )  -> Foe
 
-            return new Friend();
+            // throw new NotSupportedException()
+
+            // return new Friend();
+
+            if (symbolIdentifier == "SP")
+                return new Friend { Code = symbolIdentifier };
+            else if (symbolIdentifier == "ES")
+            {
+                return new Foe { Country = CountryFactory.Create(symbolIdentifier) };
+            }
+
+            throw new NotSupportedException();
         }
     }
+
+    /*
+        SP Poland
+        ES Estonia
+        OK Czechy
+        EW Białoruś
+        D Niemcy
+        OM Słowacja
+        UR Ukraina
+        9A Chorwacja
+        4O Czarnogóra
+*/
 }

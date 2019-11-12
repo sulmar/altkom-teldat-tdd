@@ -41,7 +41,18 @@ namespace TestApp.NUnitTests
         [Test]
         public void Get_IdIsNotZero_ReturnOk()
         {
+            var result = vehiclesController.Get(1);
 
+            // Conrete type
+            Assert.That(result, Is.TypeOf<OkResult>());
+
+            // Derrived
+            Assert.That(result, Is.InstanceOf<ActionResult>());
+
+            // Concrete type
+            result.Should().BeOfType<OkResult>();
+
+            // Derrived
         }
     }
 }
