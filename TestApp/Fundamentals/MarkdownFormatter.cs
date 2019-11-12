@@ -11,6 +11,9 @@ namespace TestApp
     {
         public string FormatAsBold(string content)
         {
+            if (string.IsNullOrEmpty(content))
+                throw new ArgumentNullException(nameof(content));
+
             return $"**{content}**";
         }
     }
