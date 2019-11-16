@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp", "TestApp\TestApp.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{525E2DDA-A278-4090-9AB8-B1CEDA62C9B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp.UnitTests", "TestApp.UnitTests\TestApp.UnitTests.csproj", "{28F04835-D864-4C57-8273-84C453832C8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp.UnitTests", "TestApp.UnitTests\TestApp.UnitTests.csproj", "{28F04835-D864-4C57-8273-84C453832C8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp.NUnitTests", "TestApp.NUnitTests\TestApp.NUnitTests.csproj", "{121D2887-D700-4611-BA17-038A0F919F74}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestApp.NUnitTests", "TestApp.NUnitTests\TestApp.NUnitTests.csproj", "{121D2887-D700-4611-BA17-038A0F919F74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
