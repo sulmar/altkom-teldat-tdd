@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using NGeoHash;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +9,8 @@ using System.Text;
 
 namespace TestApp.Mocking
 {
+    // dotnet add package NGeoHash
+
     public class TrackingService
     {
         public Location Get()
@@ -22,13 +25,22 @@ namespace TestApp.Mocking
             return location;
         }
 
-        public string GetPathAsCsv()
+
+        // geohash.org
+        public string GetPathAsGeoHash()
         {
+            IList<string> path = new List<string>();
+
             using (var context = new TrackingContext())
             {
                 var locations = context.Trackings.Where(t=>t.ValidGPS).Select(t=>t.Location).ToList();
 
-                return string.Join(", ", locations);
+                foreach (Location location in locations)
+                {
+                    path.Add(GeoHash.Encode(location.Latitude, location.Longitude));
+                }
+
+                return string.Join(",", path);
                     
             }
         }
