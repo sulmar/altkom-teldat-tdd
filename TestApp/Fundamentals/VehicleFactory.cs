@@ -22,16 +22,45 @@ namespace TestApp.Fundamentals
     }
 
 
-    public static class CountryFactory
+    public static class Countries
     {
-        private static IDictionary<string, string> codes = new Dictionary<string, string>
+        public static IDictionary<string, string> Data =>
+            new Dictionary<string, string>
         {
-
+            { "SP", "Poland" },
+            { "ES", "Estonia"},
+            { "OK", "Czechy"},
+            { "EW", "Białoruś"},
+            { "D",  "Niemcy"},
+            { "OM", "Słowacja"},
+            { "UR", "Ukraina"},
+            { "9A", "Chorwacja"},
+            { "4O", "Czarnogóra"},
+            { "S5", "Słowenia" },
         };
+    }
 
-        public static string Create(string code)
+
+    public class CountryFactory
+    {
+        private IDictionary<string, string> codes;
+
+        public CountryFactory()
         {
-            return codes[code];
+            codes = Countries.Data;
+        }
+        
+        
+        public string Create(string code)
+        {
+            if (codes.TryGetValue(code, out string country))
+            {
+                return country;
+            }
+            else
+            {
+                throw new NotSupportedException($"{code} is not supported");
+            }
         }
     }
 
@@ -47,27 +76,19 @@ namespace TestApp.Fundamentals
             // throw new NotSupportedException()
 
             // return new Friend();
-
+            
             if (symbolIdentifier == "SP")
                 return new Friend { Code = symbolIdentifier };
-            else if (symbolIdentifier == "ES")
+
+            else
             {
-                return new Foe { Country = CountryFactory.Create(symbolIdentifier) };
+                CountryFactory countryFactory = new CountryFactory();
+                return new Foe { Country = countryFactory.Create(symbolIdentifier) };
             }
 
             throw new NotSupportedException();
         }
     }
 
-    /*
-        SP Poland
-        ES Estonia
-        OK Czechy
-        EW Białoruś
-        D Niemcy
-        OM Słowacja
-        UR Ukraina
-        9A Chorwacja
-        4O Czarnogóra
-*/
+   
 }
