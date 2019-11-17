@@ -47,11 +47,14 @@ namespace TestApp.Mocking
                     continue;
 
                 var message = MailHelper.CreateSingleEmail(
-                    new EmailAddress(sender.Email, sender.FullName), 
-                    new EmailAddress(recipient.Email, recipient.FullName), 
+                    new EmailAddress(sender.Email, $"{sender.FirstName} {sender.LastName}"), 
+                    new EmailAddress(recipient.Email, $"{recipient.FirstName} {recipient.LastName}"), 
                     "Raport sprzedaży",
                     report.ToString(),
                     report.ToHtml());
+
+
+                Logger.Info($"Wysyłanie raportu do {recipient.FirstName} {recipient.LastName} <{recipient.Email}>...");
 
                 var response = await client.SendEmailAsync(message);
 
@@ -119,8 +122,6 @@ namespace TestApp.Mocking
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
-
-        public string FullName => $"{FirstName} {LastName}";
     }
    
 
