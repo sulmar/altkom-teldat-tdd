@@ -15,7 +15,9 @@ namespace TestApp.Mocking
         public delegate void ReportSentHandler(object sender, ReportSentEventArgs e);
         public event ReportSentHandler ReportSent;
 
-        public Action<string> Log { get; set; }
+        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
+
+
 
         public async Task SendSalesReportEmailAsync(DateTime date)
         {
@@ -30,6 +32,7 @@ namespace TestApp.Mocking
 
             SalesReport report = Create(orders);
 
+            // dotnet add package SendGrid
             SendGridClient client = new SendGridClient(apikey);
 
             SalesContext salesContext = new SalesContext();
@@ -56,11 +59,13 @@ namespace TestApp.Mocking
                 {
                     ReportSent?.Invoke(this, new ReportSentEventArgs(DateTime.Now));
 
-                    Log?.Invoke($"Raport został wysłany.");
+                    Logger.Info($"Raport został wysłany.");
                 }
                 else
                 {
-                    throw new ApplicationException("Błąd podczas wysyłania raportu");
+                    Logger.Error($"Błąd podczas wysyłania raportu.");
+
+                    throw new ApplicationException("Błąd podczas wysyłania raportu.");
                 }
             }
         }
