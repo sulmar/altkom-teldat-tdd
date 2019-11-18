@@ -20,7 +20,18 @@ namespace TestApp
             // Write the log to a storage
             // ...
 
-            MessageLogged?.Invoke(this, DateTime.UtcNow);
+            try
+            {
+
+            }
+            catch
+            {
+#if DEBUG
+                Console.WriteLine("XXXX");
+#endif
+            }
+
+          MessageLogged?.Invoke(this, DateTime.UtcNow);
         }
     }
 }
