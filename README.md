@@ -309,3 +309,153 @@ public void Log_EmptyMessage_ThrowArgumentNullException(string message)
       Assert.That(id, Is.Not.EqualTo(DateTime.MinValue));
   }
 ~~~
+
+## FluentAssertions
+
+Instalacja biblioteki
+~~~ bash
+ dotnet add package FluentAssertions
+~~~
+
+### Walidacja wyniku
+
+~~~ csharp
+ [Test]
+public void CalculateTest()
+{
+    // Arrange
+    var order = new Order
+    {
+        TotalAmount = 1000
+    };
+
+    IOrderCalculator orderCalculator = new MyOrderCalculator();
+
+    // Act
+    var result = orderCalculator.CalculateDiscount(order);
+
+    // Assert
+    result.Should().Be(1000);
+}
+~~~
+
+### Walidacja String
+
+ ~~~ csharp
+[Test]
+public void CustomerTest()
+{
+    // Arrange
+    Customer customer = new Customer("John", "Smith");
+
+    // Act
+    var result = customer.FullName;
+
+    // Assert
+    result
+        .Should()
+        .StartWith("John")
+        .And
+        .EndWith("Smith");
+}
+~~~
+
+
+### Walidacja wyjątku
+
+~~~ csharp
+[Test]
+public void ExceptionTest()
+{
+    // Arrange
+    Order order = null;
+
+    IOrderCalculator orderCalculator = new MyOrderCalculator();
+
+    // Act
+    Action act = () => orderCalculator.CalculateDiscount(order);
+
+    // Assert
+    act
+        .Should()
+        .Throw<ArgumentNullException>();
+}
+~~~
+
+### Czas wykonania
+
+~~~ csharp
+[Test]
+public void CalculateTest()
+{
+    // Arrange
+    var order = new Order
+    {
+        TotalAmount = 1000
+    };
+
+    IOrderCalculator orderCalculator = new DiscountOrderCalculator();
+
+    // Act
+    orderCalculator
+        .ExecutionTimeOf(s => s.CalculateDiscount(order))
+        .Should()
+        .BeLessOrEqualTo(500.Milliseconds());
+
+   // ekwiwalent
+    Action act = () => orderCalculator.CalculateDiscount(order);
+
+    act
+    .ExecutionTime()
+    .Should()
+    .BeLessOrEqualTo(500.Milliseconds());
+}
+~~~
+
+### Walidacja metody asynchronicznej typu void
+
+~~~ csharp
+[Test]
+public void SendAsyncTest()
+{
+    // Arrange
+    ISender sender = new EmailSender();
+
+    // Act
+    Func<Task> act = () => sender.SendAsync();
+
+    // Assert
+    act
+        .Should()
+        .CompleteWithinAsync(500.Milliseconds());
+
+}
+~~~
+
+### Walidacja metody asynchronicznej typu T
+~~~ csharp
+[Test]
+public void CalculateAsyncTest()
+{
+    // Arrange
+    var order = new Order
+    {
+        TotalAmount = 1000
+    };
+
+    IOrderCalculator orderCalculator = new MyOrderCalculator();
+
+    // Act
+    Func<Task<decimal>> act = () => orderCalculator.CalculateDiscountAsync(order);
+
+    // Assert
+    // add using FluentAssertions.Extensions
+    act
+        .Should()
+        .CompleteWithin(500.Milliseconds())
+        .Which
+        .Should()
+        .Be(1000);
+}
+~~~
+
