@@ -9,7 +9,7 @@ namespace TestApp.NUnitTests
         [Test]
         [TestCase("09:00:00", "16:30:00", "2019-01-01 09:30:00", true)]
         [TestCase("09:00:00", "16:30:00", "2019-01-01 16:30:00", true)]
-        [TestCase("09:00:00", "16:30:00", "2019-01-01 08:59:30:00", false)]
+        [TestCase("09:00:00", "16:30:00", "2019-01-01 08:59:00", false)]
         [TestCase("09:00:00", "16:30:00", "2019-01-01 16:31:00", false)]
         public void CanDiscount_IsHappyHours_ReturnsCanDiscount(TimeSpan from, TimeSpan to, DateTime orderDate, bool expected)
         {
