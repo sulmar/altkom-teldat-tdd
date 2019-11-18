@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,7 +16,11 @@ namespace TestApp.NUnitTests
             BlackFridayDiscountCalculator discountCalculator = new BlackFridayDiscountCalculator(0m);
 
 
-            discountCalculator.CalculateDiscount(null);
+            Action act = ()=> discountCalculator.CalculateDiscount(null);
+
+            act
+               .Should()
+               .Throw<ArgumentNullException>();
 
         }
 
@@ -40,9 +45,10 @@ namespace TestApp.NUnitTests
         }
 
         [Test]
-        [TestCaseSource("OrderCase")]
-        public void CalculateDiscount_DateIsNotBlackFriday_ReturnsNotDiscountTotalAmount(Order order)
+        public void CalculateDiscount_DateIsNotBlackFriday_ReturnsNotDiscountTotalAmount()
         {
+            Order order = OrderCase();
+
             order.OrderedDate = BlackFriday.AddDays(-1);
 
             BlackFridayDiscountCalculator discountCalculator = new BlackFridayDiscountCalculator(0.5m);

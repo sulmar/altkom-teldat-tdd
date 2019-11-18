@@ -13,16 +13,10 @@ namespace TestApp.NUnitTests
         {
             var formatter = new MarkdownFormatter();
 
-            Action action = () => formatter.FormatAsBold(string.Empty);
-
-            Assert.That(action, Throws.ArgumentNullException);
-
-            Assert.That(() => formatter.FormatAsBold(string.Empty), Throws.ArgumentNullException);
-
-            Assert.That(() => formatter.FormatAsBold(string.Empty), Throws.Exception.TypeOf<ArgumentNullException>());
+            Action act = () => formatter.FormatAsBold(string.Empty);
 
             // FluentAssertions
-            action.Should().Throw<ArgumentNullException>();
+            act.Should().Throw<ArgumentNullException>();
 
 
         }

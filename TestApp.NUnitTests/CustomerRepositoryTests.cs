@@ -24,8 +24,6 @@ namespace TestApp.NUnitTests
             result.Should().NotBeEmpty();
             result.Should().HaveCount(c => c == 100).And.OnlyHaveUniqueItems();
 
-
-
         }
     }
 }
