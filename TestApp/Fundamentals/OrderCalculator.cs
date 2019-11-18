@@ -48,7 +48,6 @@ namespace TestApp
         }
     }
 
-
     public class BlackFridayDiscountCalculator : IDiscountCalculator
     {
         private readonly decimal percentage;
@@ -77,7 +76,6 @@ namespace TestApp
     {
         bool CanDiscount(Order order);
     }
-
 
     public interface IDiscountAmountStrategy
     {
@@ -114,10 +112,12 @@ namespace TestApp
             this.to = to;
         }
 
-        public bool CanDiscount(Order order)
-        {
-            return order.OrderedDate.TimeOfDay.IsBetween(from, to);
-        }
+        public bool CanDiscount(Order order) => order.OrderedDate.TimeOfDay.IsBetween(from, to);
+    }
+
+    public class BlackFridayCanDiscountStrategy : ICanDiscountStrategy
+    {
+        public bool CanDiscount(Order order) => order.OrderedDate.IsBlackFriday();
     }
 
     public class DiscountCalculator : IDiscountCalculator
