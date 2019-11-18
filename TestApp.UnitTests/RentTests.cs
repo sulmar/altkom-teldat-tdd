@@ -6,6 +6,8 @@ namespace TestApp.UnitTests
     [TestClass]
     public class RentTests
     {
+
+
         [TestMethod]
         public void Method_Scenario_ExpectedBehavior()
         {

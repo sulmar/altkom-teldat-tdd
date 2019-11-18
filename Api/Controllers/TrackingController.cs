@@ -15,7 +15,7 @@ namespace Api.Controllers
 
         public TrackingController()
         {
-            trackingService = new TrackingService();
+            trackingService = new TrackingService(new FileReader());
         }
 
         [HttpGet("path")]

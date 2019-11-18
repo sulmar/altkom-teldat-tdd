@@ -9,13 +9,51 @@ using System.Text;
 
 namespace TestApp.Mocking
 {
+    public class FileReader : IFileReader
+    {
+        public string Get(string path)
+        {
+            return File.ReadAllText(path);
+        }
+    }
+
+    public class FakeValidFileReader : IFileReader
+    {
+        public string Get(string path)
+        {
+            Location location = new Location(53.125, 18.011111);
+
+            return JsonConvert.SerializeObject(location);
+        }
+    }
+
+    public class FakeInvalidFileReader : IFileReader
+    {
+        public string Get(string path)
+        {
+            return string.Empty;
+        }
+    }
+
+    public interface IFileReader
+    {
+        string Get(string path);
+    }
+
     // dotnet add package NGeoHash
 
     public class TrackingService
     {
+        private readonly IFileReader fileReader;
+
+        public TrackingService(IFileReader fileReader)
+        {
+            this.fileReader = fileReader;
+        }
+
         public Location Get()
         {
-            string json = File.ReadAllText("tracking.txt");
+            string json = fileReader.Get("tracking.txt");
 
             Location location = JsonConvert.DeserializeObject<Location>(json);
 
@@ -46,6 +84,24 @@ namespace TestApp.Mocking
         }
     }
 
+
+    public class LocationRepository
+    {
+        private readonly TrackingContext context;
+
+        public LocationRepository(TrackingContext context)
+        {
+            this.context = context;
+        }
+
+        public IEnumerable<Location> Get()
+        {
+            var locations = context.Trackings.Where(t => t.ValidGPS).Select(t => t.Location).ToList();
+
+            return locations;
+
+        }
+    }
 
     public class TrackingContext : DbContext
     {
