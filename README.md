@@ -1,5 +1,10 @@
 # TDD
 
+## Zasada
+- Red
+- Green
+- Refaktor
+
 ## MSTest
 
 ### Szablon testu
