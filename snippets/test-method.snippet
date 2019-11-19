@@ -32,9 +32,58 @@
 	<![CDATA[[Test]
         public void $Method$_$Scenario$_$Behavior$()
         {
+	   // Arrange
+
+           // Act
+
+           // Assets
 
         }]]>
 	  </Code>
     </Snippet>
   </CodeSnippet>
+
+<CodeSnippet Format="1.0.0">
+    <Header>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+      <Title>Test Async Method</Title>
+      <Author>Marcin Sulecki</Author>
+      <Description>Generates async test method MethodAsync_Scenario_ExptectedBehavior</Description>
+      <Shortcut>tma</Shortcut>
+    </Header>
+	
+    <Snippet>
+	
+	<Declarations>
+        <Literal Editable="true">
+			<ID>Method</ID>
+			<Default>Method</Default>
+      </Literal>
+      <Literal Editable="true">
+        <ID>Scenario</ID>
+        <Default>Scenario</Default>
+      </Literal>
+ 	<Literal Editable="true">
+        <ID>Behavior</ID>
+        <Default>ExpectedBehavior</Default>
+      </Literal>
+    </Declarations>
+	
+      <Code Language="csharp">
+	<![CDATA[[Test]
+        public async Task $Method$_$Scenario$_$Behavior$()
+        {
+	   // Arrange
+
+           // Act
+
+           // Assets
+
+        }]]>
+	  </Code>
+    </Snippet>
+  </CodeSnippet>
+
 </CodeSnippets>
