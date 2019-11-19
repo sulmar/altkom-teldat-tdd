@@ -40,20 +40,62 @@ namespace TestApp.Mocking
         string Get(string path);
     }
 
+    public interface ITrackingRepository
+    {
+        IEnumerable<Tracking> GetValid();
+    }
+
+    public class DbTrackingRepository : ITrackingRepository
+    {
+        private readonly TrackingContext context;
+
+        public DbTrackingRepository(TrackingContext context)
+        {
+            this.context = context;
+        }
+
+        public IEnumerable<Tracking> GetValid()
+        {
+            return context.Trackings
+                .Where(t => t.ValidGPS);
+
+        }
+    }
+
+    public interface ILocationService
+    {
+        IEnumerable<Location> Get();
+    }
+
+    public class LocationService : ILocationService
+    {
+        private readonly ITrackingRepository trackingRepository;
+
+        public IEnumerable<Location> Get()
+        {
+            return trackingRepository.GetValid().Select(t=>t.Location).ToList();
+        }
+    }
+
+
+
+
     // dotnet add package NGeoHash
 
     public class TrackingService
     {
         private readonly IFileReader fileReader;
+        private readonly ILocationService locationService;
 
-        public TrackingService(IFileReader fileReader)
+        public TrackingService(IFileReader fileReader, ILocationService locationService = null)
         {
             this.fileReader = fileReader;
+            this.locationService = locationService;
         }
 
         public Location Get()
         {
-            string json = fileReader.Get("tracking.txt");
+            string json = fileReader.Get("tracking.json");
 
             Location location = JsonConvert.DeserializeObject<Location>(json);
 
@@ -67,20 +109,11 @@ namespace TestApp.Mocking
         // geohash.org
         public string GetPathAsGeoHash()
         {
-            IList<string> path = new List<string>();
 
-            using (var context = new TrackingContext())
-            {
-                var locations = context.Trackings.Where(t=>t.ValidGPS).Select(t=>t.Location).ToList();
+           // var locations = locationService.Get();
 
-                foreach (Location location in locations)
-                {
-                    path.Add(GeoHash.Encode(location.Latitude, location.Longitude));
-                }
-
-                return string.Join(",", path);
-                    
-            }
+            //var path = locationService.Get().Select(l => GeoHash.Encode(l.Latitude, l.Longitude));            
+            return string.Join(",", locationService.Get().Select(l => GeoHash.Encode(l.Latitude, l.Longitude)));                    
         }
     }
 

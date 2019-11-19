@@ -15,7 +15,7 @@ namespace Api.Controllers
 
         public TrackingController()
         {
-            trackingService = new TrackingService(new FileReader());
+            trackingService = new TrackingService(new FileReader(), new LocationService());
         }
 
         [HttpGet("path")]
@@ -24,6 +24,12 @@ namespace Api.Controllers
             string path = trackingService.GetPathAsGeoHash();
 
             return Ok(path);
+        }
+
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok("Hello World");
         }
     }
 }
