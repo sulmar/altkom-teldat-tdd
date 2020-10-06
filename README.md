@@ -1,9 +1,17 @@
 # TDD
 
-## Zasada
+## Cykl Red-Greeen-Refactor
 - Red
 - Green
-- Refaktor
+- Refactor
+
+## Zasady FIRST
+- **F**ast – testy powinny być szybkie
+- **I**ndependent – testy powinny być niezależne 
+- **R**epeatable - testy powinny być powtarzalne 
+- **S**elf-checking - testy powinny być  automatyczne
+- **T**imely - testy powinny być pisane na bieżąco
+
 
 ## MSTest
 
